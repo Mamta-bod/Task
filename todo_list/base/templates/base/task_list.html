@@ -1,0 +1,56 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+
+<div class="header-bar">
+    <div class="task-item-wrapper">
+        <h3>Task Completed: </h3>
+        {% for task in tasks %}
+            {% if task.complete %}
+                <div class="task-wrapper">
+                    <strike>{{task}}</strike>
+                </div>
+            {% endif %}
+        {% endfor %}
+        <h3>Task Pending: </h3>
+        {% for task in tasks %}
+            {% if not task.complete %}
+            <div class="task-wrapper">
+                <a href="{% url 'task-update' task.id %}">{{task}}</a>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+<hr>
+<h1>My To Do List</h1>
+<a href="{% url 'task-create' %}">Add Task</a>
+<table>
+    <tr>
+        <th style="text-align:left;">List Of Tasks:</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+
+
+    </tr>
+    {% for task in object_list %}
+    <tr>
+        <td>{{task.title}}</td>
+        <td><a href="{% url 'task' task.id %}">View</a></td>
+        <td><a href="{% url 'task-update' task.id %}">Update</a></td>
+        <td><a href="{% url 'task-delete' task.id %}">Delete</a></td>
+
+    </tr>
+    {% empty %}
+    <h3>No items in list</h3>
+    {% endfor %}
+</table>
+
+
+
+{% endblock content %}
+
+
